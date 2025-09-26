@@ -16,7 +16,10 @@ class ChatServiceImpl implements ChatService {
       throw Exception("Missing Gemini API key in .env");
     }
 
-    _model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: apiKey);
+    _model = GenerativeModel(
+      model: 'gemini-2.0-flash-lite-001',
+      apiKey: apiKey,
+    );
   }
 
   @override

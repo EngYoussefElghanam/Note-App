@@ -14,12 +14,12 @@ class AboutPage extends StatelessWidget {
   final VoidCallback? onContactPressed;
 
   const AboutPage({
-    Key? key,
+    super.key,
     this.appName = 'Note Taker',
     this.version = 'v1.0.0',
     this.onUpgradePressed,
     this.onContactPressed,
-  }) : super(key: key);
+  });
 
   Widget _featureTile(IconData icon, String title, String subtitle) {
     return Padding(

@@ -73,20 +73,50 @@ class AuthServicesImpl implements AuthServices {
   @override
   Future<String> googleLogin() async {
     final googleSignIn = GoogleSignIn.instance;
+
     await googleSignIn.initialize(
       serverClientId:
           '786625229768-d66dspi2ds7egpvu0620i1cd9ccq3a2k.apps.googleusercontent.com',
     );
+
+    // Sign in with Google
     final gUser = await googleSignIn.authenticate();
     final gAuth = gUser.authentication;
+
+    // Build a Firebase credential and sign in
     final credential = GoogleAuthProvider.credential(idToken: gAuth.idToken);
     final userCredential = await _firebaseAuth.signInWithCredential(credential);
     final user = userCredential.user;
-    if (user != null) {
-      return user.uid;
-    } else {
-      throw Exception();
+
+    if (user == null) throw Exception('Google sign-in failed');
+
+    // ✅ Grab Google profile info
+    final name = user.displayName ?? '';
+    final email = user.email ?? '';
+
+    // Check if user doc already exists
+    final existing = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (!existing.exists) {
+      final userData = UserData(
+        name: name,
+        email: email,
+        id: user.uid,
+        createdAt: DateTime.now().toIso8601String(),
+      );
+
+      // Use your FirestoreServices helper
+      await FirestoreServices.createCollectionWithDoc(
+        collectionName: 'users',
+        docName: user.uid,
+        data: userData.toMap(),
+      );
     }
+
+    return user.uid;
   }
 
   @override
