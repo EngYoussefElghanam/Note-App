@@ -34,11 +34,12 @@ Secure your notes, organize your studies, and boost productivity with advanced f
 
 ## 📸 Screenshots  
 
-*(Add your app screenshots here in a `/screenshots` folder)*  
-
 ![Home Screen](screenshots/home.png)  
 ![Study Notes](screenshots/study_notes.png)  
-![Secure Note](screenshots/secure_note.png)  
+![General Notes](screenshots/general_notes.png)  
+![Profile Page](screenshots/profile_page.png)  
+![Settings Page](screenshots/settings_page.png)  
+![About Page](screenshots/about_page.png)  
 
 ---
 
